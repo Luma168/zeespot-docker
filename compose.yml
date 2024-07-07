@@ -1,0 +1,71 @@
+services:
+  backend:
+    image: backend:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: backend
+    volumes:
+      - ./Zee-Spot-Back:/var/www/html
+    working_dir: /var/www/html
+    command: sh -c "/usr/local/bin/wait-for-it.sh db-zeespot:3306 -- php bin/console d:s:u --force && php -S 0.0.0.0:9000 -t public"
+    ports:
+      - "8081:9000"
+    depends_on:
+      - mysql
+    networks:
+      - backend
+  
+  frontend:
+    image: frontend:latest
+    container_name: frontend
+    build:
+      context: ./Zee-Spot-Front
+      dockerfile: Dockerfile
+    depends_on:
+      - backend
+    networks:
+      - frontend
+
+  reverse-proxy:
+    image: reverse-proxy:latest
+    container_name: reverse-proxy
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    restart: always
+    ports: 
+      - 8080:80
+    networks:
+      - frontend
+      - backend
+
+  composer:
+    image: composer:latest
+    container_name: composer-zeespot
+    volumes:
+      - ./Zee-Spot-Back:/app
+    working_dir: /app
+    command: composer install --ignore-platform-reqs
+    networks:
+      - backend
+  
+  mysql:
+    image: mysql:5.7
+    container_name: db-zeespot
+    volumes:
+      - mysql-data:/var/lib/mysql
+    environment:
+      - MYSQL_DATABASE=zee_spot
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+    ports:
+      - "3306:3306"
+    networks:
+      - backend
+
+networks:
+  frontend:
+  backend:
+
+volumes:
+  mysql-data:
