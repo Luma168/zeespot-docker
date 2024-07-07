@@ -10,7 +10,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 
 class CurrentUserController extends AbstractController
 {
-    //#[Route('/api/me', name: 'me', methods: 'get')]
+    #[Route('/api/me', name: 'me', methods: 'get')]
     public function __invoke(SerializerInterface $serializer): JsonResponse
     {
         $user = $this->getUser();

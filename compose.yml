@@ -58,8 +58,6 @@ services:
     environment:
       - MYSQL_DATABASE=zee_spot
       - MYSQL_ALLOW_EMPTY_PASSWORD=yes
-    ports:
-      - "3306:3306"
     networks:
       - backend
 

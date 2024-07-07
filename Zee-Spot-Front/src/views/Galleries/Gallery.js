@@ -95,7 +95,6 @@ export default function Gallery(){
             };
 
             fetchImageNames();
-            console.log(imageNames)
         }
     }, [gallery]);
 
@@ -192,10 +191,17 @@ export default function Gallery(){
                     alignItems: 'center',
                 }}
             >
-                <Grid container spacing={3} my={10} ml={5}>
+                {/* <Grid container spacing={3} my={10} ml={5}>
                     {photos.map((photo) => (
                         <Grid item>
                             <GalleryImageCard img={photo} layout={getPhotoStyle(photo)} />
+                        </Grid>
+                    ))}
+                </Grid> */}
+                <Grid container spacing={3} my={10} ml={5}>
+                    {imageNames.map((imageName) => (
+                        <Grid item>
+                            <GalleryImageCard img={`http://localhost:8081/uploads/images/${imageName}`} layout={getPhotoStyle(imageName)} />
                         </Grid>
                     ))}
                 </Grid>
