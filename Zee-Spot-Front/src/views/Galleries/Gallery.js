@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {ImageList, ImageListItem, Container, Box, Typography, IconButton, Button, Grid} from '@mui/material';
+import {Box, Typography, IconButton, Grid} from '@mui/material';
 import CameraLogo from '../../assets/img/camera-logo.png'
 import {ScrollUpButton, ScrollDownButton} from "../../components/common/ScrollButtons";
 import { useParams } from 'react-router-dom';
@@ -8,7 +8,6 @@ import { useAuth } from '../../provider/AuthProvider';
 import dayjs from 'dayjs';
 import 'dayjs/locale/fr';
 import imageService from "../../api/imageService";
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import DriveFileRenameOutlineRoundedIcon from '@mui/icons-material/DriveFileRenameOutlineRounded';
 import { useNavigate } from 'react-router-dom';
 import routes from "../../routes/routes";
@@ -158,7 +157,7 @@ export default function Gallery(){
                     <Box>
                         <Typography variant="h3b">{gallery ? gallery.titre : ""}</Typography>
                         <Typography variant="h3">{gallery ? dayjs(gallery.date).format('D MMMM, YYYY') : ""}</Typography>
-                        {/* <Typography variant="h3b">Mariage : Mon mariage </Typography>
+                        {/* <Typography variant="h3b">Mariage : Mon mariage</Typography>
                         <Typography variant="h3">05/05/2024</Typography> */}
                     </Box>
                     <IconButton 
@@ -194,10 +193,11 @@ export default function Gallery(){
                 {/* <Grid container spacing={3} my={10} ml={5}>
                     {photos.map((photo) => (
                         <Grid item>
-                            <GalleryImageCard img={photo} layout={getPhotoStyle(photo)} />
+                            <GalleryImageCard img={photo} layout={getPhotoStyle(photo)}/>
                         </Grid>
                     ))}
                 </Grid> */}
+
                 <Grid container spacing={3} my={10} ml={5}>
                     {imageNames.map((imageName) => (
                         <Grid item>
@@ -205,6 +205,7 @@ export default function Gallery(){
                         </Grid>
                     ))}
                 </Grid>
+
                 {/* <Box
                     sx={{
                         display: 'grid',

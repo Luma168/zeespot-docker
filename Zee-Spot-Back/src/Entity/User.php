@@ -9,6 +9,7 @@ use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use App\Controller\User\CurrentUserController;
 use App\Controller\User\RegistrationController;
+use App\Controller\User\GetPhotographesController;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -33,6 +34,11 @@ use Symfony\Component\Validator\Constraints as Assert;
             name: 'register'
         ),
         new Patch(),
+        new Get(
+            uriTemplate: '/photographes',
+            controller: GetPhotographesController::class,
+            name: 'get_photographes',
+        ),
     ]
 )]
 class User implements UserInterface, PasswordAuthenticatedUserInterface

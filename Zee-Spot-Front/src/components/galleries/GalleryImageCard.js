@@ -5,6 +5,12 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import routes from '../../routes/routes';
 
 export default function GalleryImageCard(props) {
+    const [isSelected, setIsSelected] = React.useState(false)
+
+    const handleToggle = () => {
+        setIsSelected((prevState) => !prevState);
+    };
+
   return (
     <Card 
         elevation={5}
@@ -12,25 +18,26 @@ export default function GalleryImageCard(props) {
             maxWidth: 345, 
             width: props.layout.width, 
             height: props.layout.height, 
-            position: 'relative',
-            '&:hover .selectBar' : {display: 'flex'} 
+            position: 'relative', 
+            '&:hover .selectBar' : {display: 'flex'},
+            // isSelected ? '&:hover .selectBar' : {display: 'flex'} : ''
         }}
     >
-        {/* top bar */}
+        {/* top bar */} 
         <Box 
             className='selectBar'
             sx={{
-                position: 'relative',
-                // top: 0,  
+                position: 'relative', 
                 width: '100%',
-                height: '15p%',
-                display: 'none',
+                height: '15%',
+                // display: 'none',
+                display: isSelected ? 'flex' : 'none',
                 alignItems: 'center',
                 justifyContent: 'space-between',
                 bgcolor: 'secondary.main',
             }}
         >
-            <Checkbox sx={{ color: 'info.main'}} />
+            <Checkbox onClick={handleToggle} sx={{ color: 'info.main'}} />
             <IconButton sx={{ color: 'info.main'}}>
                 <DeleteOutlineIcon />
             </IconButton>

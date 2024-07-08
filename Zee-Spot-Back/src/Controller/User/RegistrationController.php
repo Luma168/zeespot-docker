@@ -27,6 +27,7 @@ class RegistrationController extends AbstractController
         $adresse_postale = $decoded->adresse_postale ?? null;
         $siret = $decoded->siret ?? null;
         $siege_social = $decoded->siege_social ?? null;
+        $role = $decoded->role ?? null;
         $plaintextPassword = $decoded->password ?? null;
 
         $user = new User();
@@ -44,6 +45,7 @@ class RegistrationController extends AbstractController
         $user->setAdressePsotale($adresse_postale);
         $user->setSiret($siret);
         $user->setSiegeSocial($siege_social);
+        $user->setRoles([$role]);
         // $user->setUsername($email);
 
         // On vérifie les erreurs
