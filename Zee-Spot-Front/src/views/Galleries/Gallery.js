@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {Box, Typography, IconButton, Grid} from '@mui/material';
+import {Box, Typography, IconButton, Grid, Button} from '@mui/material';
 import CameraLogo from '../../assets/img/camera-logo.png'
 import {ScrollUpButton, ScrollDownButton} from "../../components/common/ScrollButtons";
 import { useParams } from 'react-router-dom';
@@ -12,25 +12,26 @@ import DriveFileRenameOutlineRoundedIcon from '@mui/icons-material/DriveFileRena
 import { useNavigate } from 'react-router-dom';
 import routes from "../../routes/routes";
 import GalleryImageCard from '../../components/galleries/GalleryImageCard'
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 
 
 export default function Gallery(){
-    const photos = [
-        "https://blog.artsper.com/wp-content/uploads/2022/06/pepefroggie-770x432-2-644x362.jpg",
-        "https://img-0.journaldunet.com/nds11COnzaqETUTlqHDvQyy3YD0=/1500x/smart/ab68ae85e74c4b2691006c0467f8b7dc/ccmcms-jdn/25881466.jpg",
-        "https://img.lemde.fr/2016/08/04/0/0/560/267/664/0/75/0/a9b1471_17806-xsb5q2.jpg",
-        "https://static01.nyt.com/images/2021/04/30/multimedia/30xp-meme/29xp-meme-mediumSquareAt3X-v5.jpg",
-        "https://www.digitaltrends.com/wp-content/uploads/2019/03/whatisameme04.jpg?fit=720%2C720&p=1",
-        "https://powertofly.com/up/media-library/distracted-boyfriend-sexist-boss-meme-your-idea-repeated-by-a-guy-your-boss-you-when-you-said-your-idea.jpg?id=20568445&width=744&quality=90",
-        "https://manga-universe.net/wp-content/uploads/2023/07/Almost-every-shocked-face-1024x768.jpg",
-        "https://i.kym-cdn.com/entries/icons/facebook/000/038/233/707.jpg",
-        "https://www.mememaker.net/static/images/memes/4849801.jpg",
-        "https://blog.media.io/images/images2022/funny-text-memes-1.jpg",
-        "https://i.kinja-img.com/image/upload/c_fill,h_675,pg_1,q_80,w_1200/duw9vgampaecvtjfytjo.png",
-        "https://uploads.dailydot.com/2023/11/bonk-meme.jpg?q=65&auto=format&w=1600&ar=2:1&fit=crop",
-        "https://pyxis.nymag.com/v1/imgs/09c/923/65324bb3906b6865f904a72f8f8a908541-16-spongebob-explainer.rsquare.w400.jpg",
-        "https://c0.lestechnophiles.com/www.madmoizelle.com/wp-content/uploads/2017/02/meme-fevrier-2017.jpg?resize=640,361&key=135c26c7",
-    ]
+    // const photos = [
+    //     "https://blog.artsper.com/wp-content/uploads/2022/06/pepefroggie-770x432-2-644x362.jpg",
+    //     "https://img-0.journaldunet.com/nds11COnzaqETUTlqHDvQyy3YD0=/1500x/smart/ab68ae85e74c4b2691006c0467f8b7dc/ccmcms-jdn/25881466.jpg",
+    //     "https://img.lemde.fr/2016/08/04/0/0/560/267/664/0/75/0/a9b1471_17806-xsb5q2.jpg",
+    //     "https://static01.nyt.com/images/2021/04/30/multimedia/30xp-meme/29xp-meme-mediumSquareAt3X-v5.jpg",
+    //     "https://www.digitaltrends.com/wp-content/uploads/2019/03/whatisameme04.jpg?fit=720%2C720&p=1",
+    //     "https://powertofly.com/up/media-library/distracted-boyfriend-sexist-boss-meme-your-idea-repeated-by-a-guy-your-boss-you-when-you-said-your-idea.jpg?id=20568445&width=744&quality=90",
+    //     "https://manga-universe.net/wp-content/uploads/2023/07/Almost-every-shocked-face-1024x768.jpg",
+    //     "https://i.kym-cdn.com/entries/icons/facebook/000/038/233/707.jpg",
+    //     "https://www.mememaker.net/static/images/memes/4849801.jpg",
+    //     "https://blog.media.io/images/images2022/funny-text-memes-1.jpg",
+    //     "https://i.kinja-img.com/image/upload/c_fill,h_675,pg_1,q_80,w_1200/duw9vgampaecvtjfytjo.png",
+    //     "https://uploads.dailydot.com/2023/11/bonk-meme.jpg?q=65&auto=format&w=1600&ar=2:1&fit=crop",
+    //     "https://pyxis.nymag.com/v1/imgs/09c/923/65324bb3906b6865f904a72f8f8a908541-16-spongebob-explainer.rsquare.w400.jpg",
+    //     "https://c0.lestechnophiles.com/www.madmoizelle.com/wp-content/uploads/2017/02/meme-fevrier-2017.jpg?resize=640,361&key=135c26c7",
+    // ]
 
     // const layout = 'square';
     // const layout = 'portrait';
@@ -42,9 +43,9 @@ export default function Gallery(){
           case 'square':
             return { width: '300px', height: '300px' };
           case 'paysage':
-            return { width: '400px', height: '250px' };
+            return { width: '400px', height: '225px' };
           case 'portrait':
-            return { width: '250px', height: '400px' };
+            return { width: '225px', height: '400px' };
         //   case 'vrac':
         //     const aspectRatio = height / width //???; TROUVER COMMENT AVOIR LE RATIO 
         //     if (aspectRatio > 1.5) return { width: '400px', height: '250px' }; // paysage
@@ -54,6 +55,16 @@ export default function Gallery(){
         //     return { width: '300px', height: '300px' };  // square
         }
     };
+
+    // Check checkbox to display bin
+    const [selectedImages, setSelectedImages] = useState({});
+    const handleToggleSelect = (id) => {
+        setSelectedImages((prevSelected) => ({
+        ...prevSelected,
+        [id]: !prevSelected[id],
+        }));
+    };
+    const areSelected = Object.values(selectedImages).some((isSelected) => isSelected);
 
 
     const { setAccessToken, setRefreshToken, setUser } = useAuth();
@@ -110,6 +121,7 @@ export default function Gallery(){
 
     return(
         <Box bgcolor="info.main">
+
             {/* Gallery info */}
             <Box 
                 sx={{
@@ -120,26 +132,12 @@ export default function Gallery(){
             >
                 <Box 
                     component='img' 
-                    src={CameraLogo}
+                    src={CameraLogo} //faire adapter
                     alt="logo du photographe"
                     width={200}
                     mt={5}
                     ml={5}
                 />
-
-                {/* <Box 
-                    sx={{
-                        display: 'flex', 
-                        boxShadow: 10,
-                        // border: 'black, .5px, solid'
-                    }}
-                >
-                    <Box width={40} height={28} sx={{bgcolor: 'primary.dark'}} />
-                    <Box width={40} height={28} sx={{bgcolor: 'primary.main'}} />
-                    <Box width={40} height={28} sx={{bgcolor: 'primary.light'}} />
-                    <Box width={40} height={28} sx={{bgcolor: 'secondary.main'}} />
-                    <Box width={40} height={28} sx={{bgcolor: 'grey'}} />
-                </Box> */}
 
                 {/* Gallery info (title, date)  */}
                 <Box 
@@ -183,56 +181,83 @@ export default function Gallery(){
             </Box>
 
             {/* Pictures display */}
-            <Box 
-                sx={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                }}
-            >
-                {/* <Grid container spacing={3} my={10} ml={5}>
-                    {photos.map((photo) => (
-                        <Grid item>
-                            <GalleryImageCard img={photo} layout={getPhotoStyle(photo)}/>
-                        </Grid>
-                    ))}
-                </Grid> */}
-
-                <Grid container spacing={3} my={10} ml={5}>
-                    {imageNames.map((imageName) => (
-                        <Grid item>
-                            <GalleryImageCard img={`http://localhost:8081/uploads/images/${imageName}`} layout={getPhotoStyle(imageName)} />
-                        </Grid>
-                    ))}
-                </Grid>
-
-                {/* <Box
+            {/* <Box sx={{display: 'flex'}}>
+                <Box 
                     sx={{
-                        display: 'grid',
-                        gap: '5px',
-                        gridTemplateColumns: 'repeat(auto-fit, minmax(100px, 1fr))',
-                        gridAutoRows: '75px',
-                        gridAutoFlow: 'dense',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        width: '90%'
                     }}
                 >
-                    {photos.map((photo) => (
-                        <Box
-                            key={index}
-                            component="img"
-                            src={photo.url}
-                            // alt={`photo-${index}`}
-                            sx={{
-                                width: '100%',
-                                height: '100%',
-                                objectFit: 'cover',
-                                ...(photo.type === 'paysage' && { gridColumn: 'span 2' }),
-                                ...(photo.type === 'portrait' && { gridRow: 'span 2' }),
-                                ...(photo.type === 'square' && { gridColumn: 'span 2', gridRow: 'span 2' }),    
-                            }}
-                        />
-                    ))}
-                </Box> */}
+                    <Grid container spacing={3} my={10} ml={5}>
+                        {photos.map((photo) => (
+                            <Grid item>
+                                <GalleryImageCard img={photo} layout={getPhotoStyle(photo)} areSelected={areSelected}/>
+                            </Grid>
+                        ))}
+                    </Grid>
+                </Box>
+                <Box 
+                    sx={{width: '10%'}}/>
+            </Box> */}
+            
+            <Box sx={{display: 'flex'}}>
+                <Box 
+                    sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        width: '90%'
+                    }}
+                >
+                    <Grid container spacing={3} my={10} ml={5}>
+                        {imageNames.map((imageName, index) => (
+                            <Grid item key={index}>
+                                <GalleryImageCard 
+                                    img={`http://localhost:8081/uploads/images/${imageName}`} 
+                                    layout={getPhotoStyle(imageName)} 
+                                    isSelected={!!selectedImages[index]}
+                                    onToggleSelect={() => handleToggleSelect(index)}
+                                />
+                            </Grid>
+                        ))}
+                    </Grid>
+                    
+                </Box>
+                <Box sx={{width: '10%'}}/>
             </Box>
+
+            {/* modify gallery bottom */}
+            <Box
+                sx={{
+                    width: '100%',
+                    display: 'flex',
+                    justifyContent: 'flex-end'
+                }}
+            >
+                <Button 
+                    variant="contained"
+                    sx={{margin: '0 50px 30px 0'}}
+                >Valider et enregistrer ma galerie</Button>
+            </Box>
+
+
+            {
+                areSelected 
+                && 
+                (<IconButton>
+                    <DeleteOutlineIcon 
+                        sx={{   
+                            fontSize: '40px',
+                            position: 'fixed',
+                            top: '58%',
+                            right: 39,
+                            color: 'black'
+                        }}
+                    />
+                </IconButton>)
+            }
 
             <ScrollUpButton />
             <ScrollDownButton />
