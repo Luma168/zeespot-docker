@@ -2,13 +2,14 @@ import { HOST } from "./constants";
 import http from "./http";
 
 const imageService = {
-    create_image(selected, galerieId, file, access_token, onResponse = undefined) {
+    create_image(selected, cover, galerieId, file, access_token, onResponse = undefined) {
         const options = http.defaultOptions();
         options.method = "POST";
         options.headers.append('Authorization', 'Bearer ' + access_token);
         options.headers.delete("Content-Type")
         let data = new FormData()
         data.append("selected", selected)
+        data.append("cover", cover)
         data.append("galerie", galerieId)
         data.append("images", file)
         options.body = data

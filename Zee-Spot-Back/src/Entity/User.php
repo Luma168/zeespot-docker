@@ -108,9 +108,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Groups(["getUser"])]
     private ?string $tel_secondaire = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(["getUser"])]
-    private ?string $adresse_psotale = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     #[Assert\Regex(
@@ -157,6 +154,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\OneToMany(targetEntity: Galerie::class, mappedBy: 'user')]
     private Collection $galeries;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(["getUser"])]
+    private ?string $rue = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(["getUser"])]
+    private ?string $ville = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(["getUser"])]
+    private ?string $departement = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(["getUser"])]
+    private ?string $code_postal = null;
 
     public function __construct()
     {
@@ -301,11 +314,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getAdressePsotale(): ?string
-    {
-        return $this->adresse_psotale;
-    }
-
     public function setAdressePsotale(?string $adresse_psotale): static
     {
         $this->adresse_psotale = $adresse_psotale;
@@ -411,6 +419,54 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $galery->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getRue(): ?string
+    {
+        return $this->rue;
+    }
+
+    public function setRue(?string $rue): static
+    {
+        $this->rue = $rue;
+
+        return $this;
+    }
+
+    public function getVille(): ?string
+    {
+        return $this->ville;
+    }
+
+    public function setVille(?string $ville): static
+    {
+        $this->ville = $ville;
+
+        return $this;
+    }
+
+    public function getDepartement(): ?string
+    {
+        return $this->departement;
+    }
+
+    public function setDepartement(?string $departement): static
+    {
+        $this->departement = $departement;
+
+        return $this;
+    }
+
+    public function getCodePostal(): ?string
+    {
+        return $this->code_postal;
+    }
+
+    public function setCodePostal(?string $code_postal): static
+    {
+        $this->code_postal = $code_postal;
 
         return $this;
     }

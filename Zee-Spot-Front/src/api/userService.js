@@ -2,7 +2,7 @@ import { HOST } from "./constants";
 import http from "./http";
 
 const userService = {
-    create_user(nom, prenom, email, email_pro = null , tel_primaire, tel_secondaire, siret, siege_social, password, role, onResponse = undefined) {
+    create_user(nom, prenom, email, email_pro = null , tel_primaire, tel_secondaire, rue, ville, code_postal, departement, siret, siege_social, password, role, onResponse = undefined) {
         const options = http.defaultOptions();
         options.method = "POST";
         options.body = JSON.stringify({
@@ -12,6 +12,10 @@ const userService = {
             "email_pro": email_pro, 
             "tel_primaire": tel_primaire, 
             "tel_secondaire": tel_secondaire, 
+            "rue": rue, 
+            "ville": ville, 
+            "code_postal": code_postal, 
+            "departement": departement, 
             "siret": siret,
             "siege_social": siege_social,
             "password": password,

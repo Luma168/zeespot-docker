@@ -17,6 +17,7 @@ class ImageUploadController extends AbstractController
         $galerieId = $request->get('galerie');
         $galerie = $entityManager->getRepository(Galerie::class)->findOneBy(["id" => $galerieId]);
         $selected = $request->get('selected');
+        $cover = $request->get('cover');
 
         if (!$upladedImages) {
             throw new BadRequestHttpException('"file" is required');
@@ -27,6 +28,7 @@ class ImageUploadController extends AbstractController
         $image->setUpdatedAt(new \DateTimeImmutable());
         $image->setGalerie($galerie);
         $image->setSelected($selected);
+        $image->setCover($cover);
 
         $galerie->addImage($image);
 

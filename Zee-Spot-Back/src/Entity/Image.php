@@ -48,6 +48,9 @@ class Image
     #[ORM\JoinColumn(nullable: false)]
     private ?Galerie $galerie = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $cover = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -108,6 +111,18 @@ class Image
     public function setGalerie(?Galerie $galerie): static
     {
         $this->galerie = $galerie;
+
+        return $this;
+    }
+
+    public function isCover(): ?bool
+    {
+        return $this->cover;
+    }
+
+    public function setCover(?bool $cover): static
+    {
+        $this->cover = $cover;
 
         return $this;
     }

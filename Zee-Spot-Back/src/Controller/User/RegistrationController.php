@@ -23,8 +23,11 @@ class RegistrationController extends AbstractController
         $nom = $decoded->nom ?? null;
         $prenom = $decoded->prenom ?? null;
         $tel_primaire = $decoded->tel_primaire ?? null;
+        $rue = $decoded->rue ?? null;
+        $ville = $decoded->ville ?? null;
+        $departement = $decoded->departement ?? null;
+        $code_postal = $decoded->code_postal ?? null;
         $tel_secondaire = $decoded->tel_secondaire ?? null;
-        $adresse_postale = $decoded->adresse_postale ?? null;
         $siret = $decoded->siret ?? null;
         $siege_social = $decoded->siege_social ?? null;
         $role = $decoded->role ?? null;
@@ -40,9 +43,12 @@ class RegistrationController extends AbstractController
         $user->setEmail($email);
         $user->setNom($nom);
         $user->setPrenom($prenom);
+        $user->setRue($rue);
+        $user->setVille($ville);
+        $user->setDepartement($departement);
+        $user->setCodePostal($code_postal);
         $user->setTelPrimaire($tel_primaire);
         $user->setTelSecondaire($tel_secondaire);
-        $user->setAdressePsotale($adresse_postale);
         $user->setSiret($siret);
         $user->setSiegeSocial($siege_social);
         $user->setRoles([$role]);

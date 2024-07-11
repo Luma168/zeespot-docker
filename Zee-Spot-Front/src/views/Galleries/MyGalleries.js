@@ -1,10 +1,24 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Box, Container, Typography } from '@mui/material'
+import galleryService from "../../api/galleryService";
 import FirstGalleryBG from '../../assets/img/FirstGalleryBG.png'
 import GalleryCard from '../../components/galleries/PreviewGalleryCard'
 import CreateGalleryCard from '../../components/galleries/CreateGalleryCard'
 
 export default function MyGalleries(){
+    const [galleries, setGalleries] = useState();
+
+    useEffect(() => {
+        galleryService.get_galleries_by_user(localStorage.getItem('access_token'), (statusCode, jsonRes) => {
+            if (200 === statusCode) {
+                setGalleries(jsonRes)
+                console.log(galleries)
+            } else {
+                console.log("Une erreur est survenue, veuillez réessayer ultérieurement.");
+            };
+        });
+    }, [])
+
     return(
         <Box
             sx={{

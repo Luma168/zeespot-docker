@@ -8,21 +8,39 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { useNavigate } from 'react-router-dom';
-import routes from '../../routes/routes';
 import imageService from '../../api/imageService';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import { styled } from '@mui/material/styles';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
+
+const VisuallyHiddenInput = styled('input')({
+    clip: 'rect(0 0 0 0)',
+    clipPath: 'inset(50%)',
+    height: 1,
+    overflow: 'hidden',
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    whiteSpace: 'nowrap',
+    width: 1,
+  });
 
 export default function GalleryForm(){
     const [openDownloadFile, setOpenDownloadFile] = useState(false);
     const { setAccessToken, setRefreshToken, setUser } = useAuth();
     const navigate = useNavigate();
     const [filesToUpload, setFilesToUpload] = useState([])
+    const [coverFile, setCoverFile] = useState(null);
     
     const handleFilesChange = (files) => {
         setFilesToUpload([ ...files ])
+    };
+
+    const handleCoverChange = (event) => {
+        setCoverFile(event.target.files[0]);
     };
 
     function handleOpenDownloadFile(){
@@ -36,13 +54,26 @@ export default function GalleryForm(){
     function uploadFiles(galerieId) {
         filesToUpload.forEach((file) => {
             imageService.create_image(
-                false,
+                0,
+                0,
                 galerieId,
                 file,
                 localStorage.getItem('access_token')
             )
         })
     }
+
+    const uploadCover = (galerieId) => {
+        if (coverFile) {
+            imageService.create_image(
+                0,
+                1,
+                galerieId,
+                coverFile,
+                localStorage.getItem('access_token')
+            );
+        }
+    };
 
     const submit = (e) => {
         const data = new FormData(e.currentTarget);
@@ -56,8 +87,8 @@ export default function GalleryForm(){
             localStorage.getItem('access_token'),
             (statusCode, jsonRes) => {
                 if (201 === statusCode) {
-                    console.log("files:", filesToUpload)
                     uploadFiles(jsonRes.id)
+                    uploadCover(jsonRes.id)
                     navigate(`/galerie/${jsonRes.accessToken}`)
                 } else {
                     console.log("Une erreur est survenue, veuillez réessayer ultérieure.");
@@ -132,7 +163,32 @@ export default function GalleryForm(){
                             <Typography variant='h4'>Galerie Publique</Typography>
                         </Box>
 
-                        {/* Buttons */}
+                        <Button
+                            component="label"
+                            role={undefined}
+                            variant="contained"
+                            tabIndex={-1}
+                            startIcon={<CloudUploadIcon />}
+                        >
+                            photo de couvertire
+                            <VisuallyHiddenInput type="file" name='couverture' onChange={handleCoverChange}/>
+                        </Button>
+                        
+                        <Dialog
+                            open={openDownloadFile}
+                            onClose={handleClose}
+                            TransitionComponent={Transition}
+                            keepMounted
+                            aria-describedby="alert-dialog-slide-description"
+                            maxWidth={true}
+                        >
+                            <DownloadFile 
+                                handleClose={handleClose}
+                                filesToUpload={filesToUpload}
+                                handleFilesChange={handleFilesChange}
+                            />
+                        </Dialog>
+                        
                         <Box
                             sx={{
                                 '& .MuiButtonBase-root':{
@@ -145,24 +201,10 @@ export default function GalleryForm(){
                             <Button onClick={handleOpenDownloadFile} variant='contained' sx={{marginRight: '40px'}}>Télécharger mes photos</Button>
                             <Button variant='contained' type="submit">Création de ma galerie</Button>
                         </Box>
+
                     </Box>  
 
-                    <Dialog
-                        open={openDownloadFile}
-                        onClose={handleClose}
-                        TransitionComponent={Transition}
-                        keepMounted
-                        aria-describedby="alert-dialog-slide-description"
-                        maxWidth={true}
-                    >
-                        <DownloadFile 
-                            handleClose={handleClose}
-                            filesToUpload={filesToUpload}
-                            handleFilesChange={handleFilesChange}
-                        />
-                    </Dialog>
                 </form>
-                <Box></Box>
             </Container>
         </Box>
     )

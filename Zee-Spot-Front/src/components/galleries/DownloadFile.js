@@ -16,6 +16,8 @@ export default function DownloadFile(props){
                     multiFile={true}
                     onFilesChange={props.handleFilesChange}
                     onContextReady={(context) => {}}
+                    allowedExtensions={['png','apng', 'jpeg', 'jpg', 'pjpeg']}
+                    acceptedType={'image/*'}
                 />
             <Button onClick={props.handleClose}>Fermer</Button>
         </Box>
