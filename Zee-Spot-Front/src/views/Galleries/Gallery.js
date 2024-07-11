@@ -215,7 +215,7 @@ export default function Gallery(){
                         {imageNames.map((imageName, index) => (
                             <Grid item key={index}>
                                 <GalleryImageCard 
-                                    img={`http://localhost:8081/uploads/images/${imageName}`} 
+                                    img={`${window.location.origin.replace(/0$/, '1')}/uploads/images/${imageName}`} 
                                     layout={getPhotoStyle(imageName)} 
                                     isSelected={!!selectedImages[index]}
                                     onToggleSelect={() => handleToggleSelect(index)}

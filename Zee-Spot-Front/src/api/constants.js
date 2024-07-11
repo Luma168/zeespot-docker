@@ -1,3 +1,3 @@
-const HOST = "http://localhost:8081/api";
+const HOST = window.location.origin + "/api";
 
 export { HOST };
