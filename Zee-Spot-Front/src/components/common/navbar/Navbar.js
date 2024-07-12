@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { AppBar, Box, Button, ButtonGroup, Toolbar} from "@mui/material";
 import WhiteLogo from '../../../assets/img/logo_zeespot_white.png'
@@ -11,6 +11,21 @@ export default function Navbar(){
 
     // constante temporaire pour test routes    
     const [galleryCount, setGalleryCount] = useState(1)
+
+    useEffect(() => {
+        const user = localStorage.getItem('user');
+        if (user) {
+            setIsConnected(true);
+        }
+    }, []);
+
+    const handleLogin = () => {
+        setIsConnected(true);
+    };
+
+    const handleLogout = () => {
+        setIsConnected(false);
+    };
 
     return(
         <AppBar 
@@ -75,9 +90,9 @@ export default function Navbar(){
                 <Box sx={{mr:'40px'}}>
                     {
                     isConnected ? 
-                    <AvatarMenu />
+                    <AvatarMenu onLogout={handleLogout} />
                     :
-                    <SignDialogs />
+                    <SignDialogs onLogin={handleLogin} />
                     }
                 </Box>
 

@@ -8,7 +8,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function AlertDialogSlide() {
+export default function AlertDialogSlide({ onLogin }) {
   const [openSignIn,setOpenSignIn] = React.useState(false)
   const [openSignUp,setOpenSignUp] = React.useState(false)
 
@@ -84,6 +84,7 @@ export default function AlertDialogSlide() {
         <SignIn 
             handleClose={handleClose} 
             handleClickOpenSignUp={handleClickOpenSignUp}
+            onLogin={onLogin}
         />
       </Dialog>
 

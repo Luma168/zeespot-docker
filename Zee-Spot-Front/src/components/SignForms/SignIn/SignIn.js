@@ -18,9 +18,10 @@ export default function SignIn(props){
     const fetchProfile = (access_token) => {
         authService.profile(access_token, (statusCode, jsonRes) => {
             if (200 === statusCode) {
-                setUser(JSON.stringify(jsonRes));
-                setAccessToken(access_token);
+                setUser(JSON.stringify(jsonRes))
+                setAccessToken(access_token)
                 props.handleClose()
+                props.onLogin()
             } else if (401 === statusCode) {
                 console.log('Identifiant ou mot de passe invalide');
             } else {
