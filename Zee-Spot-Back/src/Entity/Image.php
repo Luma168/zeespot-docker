@@ -6,6 +6,7 @@ use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\Post;
+use App\Controller\Image\GetCoverImageController;
 use App\Controller\Image\ImageUploadController;
 use App\Repository\ImageRepository;
 use Doctrine\ORM\Mapping as ORM;
@@ -21,7 +22,12 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
             controller: ImageUploadController::class,
             deserialize: false
         ),
-        new Delete()
+        new Delete(),
+        new Get(
+            uriTemplate: '/galerie/{id}/cover',
+            controller: GetCoverImageController::class,
+            name: 'get_cover_image'
+        )
     ]
 )]
 class Image

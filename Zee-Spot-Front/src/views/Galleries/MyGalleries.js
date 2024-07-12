@@ -12,7 +12,6 @@ export default function MyGalleries(){
         galleryService.get_galleries_by_user(localStorage.getItem('access_token'), (statusCode, jsonRes) => {
             if (200 === statusCode) {
                 setGalleries(jsonRes)
-                console.log(galleries)
             } else {
                 console.log("Une erreur est survenue, veuillez réessayer ultérieurement.");
             };
@@ -59,7 +58,9 @@ export default function MyGalleries(){
                 </Box>
 
                 <Box gap={3} sx={{display: 'flex'}}>
-                    <GalleryCard />
+                    {galleries?.map((gallery) => (
+                        <GalleryCard key={gallery.id} gallery={gallery} />
+                    ))}
                     <CreateGalleryCard />
                 </Box>
 

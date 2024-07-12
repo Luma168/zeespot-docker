@@ -28,5 +28,11 @@ const imageService = {
         options.headers.append('Authorization', 'Bearer ' + access_token);
         return http.call(HOST + `/images/${id}`, options, onResponse);
     },
+
+    get_cover_by_gallery(id, access_token, onResponse = undefined) {
+        const options = http.defaultOptions();
+        options.headers.append('Authorization', 'Bearer ' + access_token);
+        return http.call(HOST + `/galerie/${id}/cover`, options, onResponse);
+    }
 }
 export default imageService;
