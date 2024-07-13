@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { CardActionArea, Typography, CardMedia, Card, Checkbox, Box, CardContent, IconButton} from '@mui/material';
+import { CardActionArea, Typography, CardMedia, Card, Checkbox, Box,IconButton} from '@mui/material';
 import { Link } from 'react-router-dom';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import routes from '../../routes/routes';
@@ -16,7 +16,21 @@ export default function GalleryCard(props) {
                 console.log("Une erreur est survenue, veuillez réessayer ultérieurement.");
             };
         })
-    }, [])
+    })
+
+    const handleDelete = async () => {
+        const access_token = localStorage.getItem('access_token');
+        const images = props.gallery.images;
+        
+        // Delete images
+        for (let imageUrl of images) {
+            const imageId = imageUrl.split('/').pop(); // Extract the image ID from the URL
+            await imageService.delete_image(access_token, imageId);
+        }
+
+        // Delete the gallery
+        await props.onDelete(props.gallery.accessToken);
+    };
 
     return (
         <Card sx={{ maxWidth: 345, width: '300px', height: '250px', position: 'relative' }}>
@@ -26,7 +40,10 @@ export default function GalleryCard(props) {
                     checked={props.isSelected}
                     onChange={props.onToggleSelect} 
                 />
-                <IconButton sx={{ color: 'info.main'}}>
+                <IconButton 
+                    sx={{ color: 'info.main'}}
+                    onClick={handleDelete}
+                >
                     <DeleteOutlineIcon />
                 </IconButton>
             </Box>

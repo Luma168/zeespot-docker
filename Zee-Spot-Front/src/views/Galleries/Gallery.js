@@ -4,7 +4,6 @@ import CameraLogo from '../../assets/img/camera-logo.png'
 import {ScrollUpButton, ScrollDownButton} from "../../components/common/ScrollButtons";
 import { useParams } from 'react-router-dom';
 import galleryService from "../../api/galleryService";
-import { useAuth } from '../../provider/AuthProvider';
 import dayjs from 'dayjs';
 import 'dayjs/locale/fr';
 import imageService from "../../api/imageService";
@@ -30,8 +29,8 @@ export default function Gallery(){
         //     if (aspectRatio > 1.5) return { width: '400px', height: '250px' }; // paysage
         //     if (aspectRatio < 0.75) return { width: '250px', height: '400px' }; // portrait
         //     // return { width: '300px', height: '300px' }; // square
-        //   default:
-        //     return { width: '300px', height: '300px' };  // square
+          default:
+            return { width: '300px', height: '300px' };  // square
         }
     };
 
@@ -82,6 +81,28 @@ export default function Gallery(){
             fetchImageDetails();
         }
     }, [gallery]);
+
+    const handleDeleteImage = async (index) => {
+        const access_token = localStorage.getItem('access_token');
+        const imageDetail = imageDetails[index];
+        if (imageDetail) {
+            await imageService.delete_image(access_token, imageDetail.id);
+
+            const updatedGalleryImages = gallery.images.filter((_, i) => i !== index);
+            setGallery(prevGallery => ({
+                ...prevGallery,
+                images: updatedGalleryImages
+            }));
+
+            const updatedImageDetails = imageDetails.filter((_, i) => i !== index);
+            setImageDetails(updatedImageDetails);
+            setSelectedImages(prevSelected => {
+                const newSelected = { ...prevSelected };
+                delete newSelected[index];
+                return newSelected;
+            });
+        }
+    };
 
     function deleteGallery(uid) {
         const access_token = localStorage.getItem('access_token');
@@ -229,6 +250,7 @@ export default function Gallery(){
                                     layout={getPhotoStyle(imageDetail.name)} 
                                     isSelected={!!selectedImages[index]}
                                     onToggleSelect={() => handleToggleSelect(index)}
+                                    onDelete={() => handleDeleteImage(index)}
                                 />
                             </Grid>
                         ))}

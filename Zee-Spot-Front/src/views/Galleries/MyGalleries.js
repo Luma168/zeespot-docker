@@ -21,6 +21,14 @@ export default function MyGalleries(){
         });
     }, [])
 
+    const handleDeleteGallery = async (accessToken) => {
+        const access_token = localStorage.getItem('access_token');
+        await galleryService.delete_gallery_by_uid(access_token, accessToken);
+
+        const updatedGalleries = galleries.filter(gallery => gallery.accessToken !== accessToken);
+        setGalleries(updatedGalleries);
+    };
+
     const handleToggleSelect = (id) => {
         setSelectedGalleries((prevSelected) => ({
             ...prevSelected,
@@ -107,6 +115,7 @@ export default function MyGalleries(){
                             gallery={gallery}
                             isSelected={!!selectedGalleries[gallery.id]}
                             onToggleSelect={() => handleToggleSelect(gallery.id)}
+                            onDelete={handleDeleteGallery}
                         />
                     ))}
                     <CreateGalleryCard />

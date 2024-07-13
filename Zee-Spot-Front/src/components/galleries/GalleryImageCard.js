@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { CardActionArea, Typography, CardMedia, Card, Checkbox, Box, CardContent, IconButton} from '@mui/material';
+import { CardMedia, Card, Checkbox, Box, IconButton} from '@mui/material';
 import { Link } from 'react-router-dom';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import routes from '../../routes/routes';
@@ -40,7 +40,10 @@ import routes from '../../routes/routes';
                     onChange={props.onToggleSelect}
                     onClick={handleToggle} 
                     sx={{color: 'info.main'}} />
-                <IconButton sx={{ color: 'info.main'}}>
+                <IconButton 
+                    sx={{ color: 'info.main'}}
+                    onClick={props.onDelete}
+                >
                     <DeleteOutlineIcon />
                 </IconButton>
             </Box>
