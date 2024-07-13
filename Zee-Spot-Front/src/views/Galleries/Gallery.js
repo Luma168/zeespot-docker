@@ -16,28 +16,7 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 
 
 export default function Gallery(){
-    // const photos = [
-    //     "https://blog.artsper.com/wp-content/uploads/2022/06/pepefroggie-770x432-2-644x362.jpg",
-    //     "https://img-0.journaldunet.com/nds11COnzaqETUTlqHDvQyy3YD0=/1500x/smart/ab68ae85e74c4b2691006c0467f8b7dc/ccmcms-jdn/25881466.jpg",
-    //     "https://img.lemde.fr/2016/08/04/0/0/560/267/664/0/75/0/a9b1471_17806-xsb5q2.jpg",
-    //     "https://static01.nyt.com/images/2021/04/30/multimedia/30xp-meme/29xp-meme-mediumSquareAt3X-v5.jpg",
-    //     "https://www.digitaltrends.com/wp-content/uploads/2019/03/whatisameme04.jpg?fit=720%2C720&p=1",
-    //     "https://powertofly.com/up/media-library/distracted-boyfriend-sexist-boss-meme-your-idea-repeated-by-a-guy-your-boss-you-when-you-said-your-idea.jpg?id=20568445&width=744&quality=90",
-    //     "https://manga-universe.net/wp-content/uploads/2023/07/Almost-every-shocked-face-1024x768.jpg",
-    //     "https://i.kym-cdn.com/entries/icons/facebook/000/038/233/707.jpg",
-    //     "https://www.mememaker.net/static/images/memes/4849801.jpg",
-    //     "https://blog.media.io/images/images2022/funny-text-memes-1.jpg",
-    //     "https://i.kinja-img.com/image/upload/c_fill,h_675,pg_1,q_80,w_1200/duw9vgampaecvtjfytjo.png",
-    //     "https://uploads.dailydot.com/2023/11/bonk-meme.jpg?q=65&auto=format&w=1600&ar=2:1&fit=crop",
-    //     "https://pyxis.nymag.com/v1/imgs/09c/923/65324bb3906b6865f904a72f8f8a908541-16-spongebob-explainer.rsquare.w400.jpg",
-    //     "https://c0.lestechnophiles.com/www.madmoizelle.com/wp-content/uploads/2017/02/meme-fevrier-2017.jpg?resize=640,361&key=135c26c7",
-    // ]
-
-    // const layout = 'square';
-    // const layout = 'portrait';
     const layout = 'paysage';
-    // const layout = 'vrac';
-
     const getPhotoStyle = (photo) => {
         switch (layout) {
           case 'square':
@@ -56,7 +35,6 @@ export default function Gallery(){
         }
     };
 
-    // Check checkbox to display bin
     const [selectedImages, setSelectedImages] = useState({});
     const handleToggleSelect = (id) => {
         setSelectedImages((prevSelected) => ({
@@ -64,14 +42,11 @@ export default function Gallery(){
         [id]: !prevSelected[id],
         }));
     };
-    const areSelected = Object.values(selectedImages).some((isSelected) => isSelected);
 
-
-    const { setAccessToken, setRefreshToken, setUser } = useAuth();
     const navigate = useNavigate();
     const { uid } = useParams();    
     const [gallery, setGallery] = useState();
-    const [imageNames, setImageNames] = useState([])
+    const [imageDetails, setImageDetails] = useState([])
 
     useEffect(() => {
         galleryService.get_gallery_by_uid(localStorage.getItem('access_token'), uid, (statusCode, jsonRes) => {
@@ -85,12 +60,12 @@ export default function Gallery(){
 
     useEffect(() => {
         if (gallery) {
-            const fetchImageNames = async () => {
-                const imageNamePromises = gallery.images.map((url) =>
+            const fetchImageDetails = async () => {
+                const imageDetailsPromises = gallery.images.map((url) =>
                     new Promise((resolve) => {
                         imageService.get_image_name(localStorage.getItem("access_token"), url.substring(4), (statusCode, jsonRes) => {
                             if (200 === statusCode) {
-                                resolve(jsonRes.name);
+                                resolve(jsonRes);
                             } else {
                                 console.log("Une erreur est survenue, veuillez réessayer ultérieurement.");
                                 resolve(null);
@@ -99,12 +74,12 @@ export default function Gallery(){
                     })
                 );
 
-                const imageNamesArray = await Promise.all(imageNamePromises);
-                const uniqueImageNames = [...new Set(imageNamesArray.filter(name => name !== null))];
-                setImageNames(uniqueImageNames);
+                const imageDetailsArray = await Promise.all(imageDetailsPromises);
+                const validImageDetails = imageDetailsArray.filter(details => details !== null);
+                setImageDetails(validImageDetails);
             };
 
-            fetchImageNames();
+            fetchImageDetails();
         }
     }, [gallery]);
 
@@ -119,6 +94,29 @@ export default function Gallery(){
         navigate(routes.HOME)
     }
 
+    const deleteSelectedImages = async () => {
+        const access_token = localStorage.getItem('access_token');
+        const selectedImageIds = Object.keys(selectedImages).filter(key => selectedImages[key]);
+
+        for (let index of selectedImageIds) {
+            const imageDetail = imageDetails[index];
+            if (imageDetail) {
+                await imageService.delete_image(access_token, imageDetail.id);
+            }
+        }
+
+        const updatedGalleryImages = gallery.images.filter((url, index) => !selectedImages[index]);
+        setGallery(prevGallery => ({
+            ...prevGallery,
+            images: updatedGalleryImages
+        }));
+
+        const updatedImageDetails = imageDetails.filter((_, index) => !selectedImages[index]);
+        setImageDetails(updatedImageDetails);
+        setSelectedImages({});
+    };
+
+
     return(
         <Box bgcolor="info.main">
 
@@ -132,7 +130,7 @@ export default function Gallery(){
             >
                 <Box 
                     component='img' 
-                    src={CameraLogo} //faire adapter
+                    src={CameraLogo}
                     alt="logo du photographe"
                     width={200}
                     mt={5}
@@ -211,12 +209,24 @@ export default function Gallery(){
                         width: '90%'
                     }}
                 >
-                    <Grid container spacing={3} my={10} ml={5}>
+                    {/* <Grid container spacing={3} my={10} ml={5}>
                         {imageNames.map((imageName, index) => (
                             <Grid item key={index}>
                                 <GalleryImageCard 
                                     img={`${window.location.origin.replace(/0$/, '1')}/uploads/images/${imageName}`} 
                                     layout={getPhotoStyle(imageName)} 
+                                    isSelected={!!selectedImages[index]}
+                                    onToggleSelect={() => handleToggleSelect(index)}
+                                />
+                            </Grid>
+                        ))}
+                    </Grid> */}
+                    <Grid container spacing={3} my={10} ml={5}>
+                        {imageDetails.map((imageDetail, index) => (
+                            <Grid item key={index}>
+                                <GalleryImageCard 
+                                    img={`${window.location.origin.replace(/0$/, '1')}/uploads/images/${imageDetail.name}`} 
+                                    layout={getPhotoStyle(imageDetail.name)} 
                                     isSelected={!!selectedImages[index]}
                                     onToggleSelect={() => handleToggleSelect(index)}
                                 />
@@ -244,9 +254,8 @@ export default function Gallery(){
 
 
             {
-                areSelected 
-                && 
-                (<IconButton>
+                Object.values(selectedImages).some(isSelected => isSelected) &&
+                <IconButton onClick={deleteSelectedImages}>
                     <DeleteOutlineIcon 
                         sx={{   
                             fontSize: '40px',
@@ -256,7 +265,7 @@ export default function Gallery(){
                             color: 'black'
                         }}
                     />
-                </IconButton>)
+                </IconButton>
             }
 
             <ScrollUpButton />

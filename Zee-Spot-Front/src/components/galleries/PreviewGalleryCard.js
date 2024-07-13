@@ -21,7 +21,11 @@ export default function GalleryCard(props) {
     return (
         <Card sx={{ maxWidth: 345, width: '300px', height: '250px', position: 'relative' }}>
             <Box sx={{height: '15%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', bgcolor: 'secondary.main'}}>
-                <Checkbox sx={{ color: 'info.main'}} />
+                <Checkbox
+                    sx={{ color: 'info.main' }}
+                    checked={props.isSelected}
+                    onChange={props.onToggleSelect} 
+                />
                 <IconButton sx={{ color: 'info.main'}}>
                     <DeleteOutlineIcon />
                 </IconButton>
