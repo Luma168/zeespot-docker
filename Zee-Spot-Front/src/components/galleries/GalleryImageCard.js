@@ -1,8 +1,6 @@
 import * as React from 'react';
-import { CardMedia, Card, Checkbox, Box, IconButton} from '@mui/material';
-import { Link } from 'react-router-dom';
+import { CardMedia, Card, Checkbox, Box, IconButton } from '@mui/material';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import routes from '../../routes/routes';
 
     export default function GalleryImageCard(props) {
         const [isSelected, setIsSelected] = React.useState(false)
@@ -12,54 +10,56 @@ import routes from '../../routes/routes';
         };
 
     return (
-        <Card 
-            elevation={5}
-            sx={{ 
-                maxWidth: 345,
-                width: props.layout.width, 
-                height: props.layout.height, 
-                position: 'relative', 
-                '&:hover .selectBar' : {display: 'flex'},
-            }}
-        >
-            {/* top bar */} 
-            <Box 
-                className='selectBar'
-                sx={{
+        <>
+            <Card 
+                elevation={5}
+                sx={{ 
+                    maxWidth: 345,
+                    width: props.layout.width, 
+                    height: props.layout.height, 
                     position: 'relative', 
-                    width: '100%',
-                    height: '15%',
-                    display: isSelected ? 'flex' : 'none',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    bgcolor: 'secondary.main',
+                    '&:hover .selectBar' : {display: 'flex'},
                 }}
-            >
-                <Checkbox 
-                    checked={props.isSelected}
-                    onChange={props.onToggleSelect}
-                    onClick={handleToggle} 
-                    sx={{color: 'info.main'}} />
-                <IconButton 
-                    sx={{ color: 'info.main'}}
-                    onClick={props.onDelete}
                 >
-                    <DeleteOutlineIcon />
-                </IconButton>
-            </Box>
-            {/* Image */}
-            <Box component={Link} to={routes.GALLERY} sx={{ height: '100%', position: 'relative' }}>
-                <CardMedia
-                    component="img"
-                    image={props.img}
-                    alt="gallery card"
+                {/* top bar */} 
+                <Box 
+                    className='selectBar'
                     sx={{
-                        backgroundRepeat: 'no-repeat',
-                        backgroundSize: 'cover',
-                    height: '100%'
-                }}
-            />
-        </Box>
-    </Card>
+                        position: 'relative', 
+                        width: '100%',
+                        height: '15%',
+                        display: isSelected ? 'flex' : 'none',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        bgcolor: 'secondary.main',
+                    }}
+                    >
+                    <Checkbox 
+                        checked={props.isSelected}
+                        onChange={props.onToggleSelect}
+                        onClick={handleToggle} 
+                        sx={{color: 'info.main'}} />
+                    <IconButton 
+                        sx={{ color: 'info.main'}}
+                        onClick={props.onDelete}
+                        >
+                        <DeleteOutlineIcon />
+                    </IconButton>
+                </Box>
+                {/* Image */}
+                <Box sx={{ height: '100%', position: 'relative' }} onClick={() => props.onOpen(props.index)}>
+                    <CardMedia
+                        component="img"
+                        image={props.img}
+                        alt="gallery card"
+                        sx={{
+                            backgroundRepeat: 'no-repeat',
+                            backgroundSize: 'cover',
+                            height: '100%'
+                        }}
+                    />
+            </Box>
+        </Card>
+    </>
   );
 }

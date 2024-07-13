@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {Box, Typography, IconButton, Grid, Button} from '@mui/material';
+import {Box, Typography, IconButton, Grid, Button, Modal} from '@mui/material';
 import CameraLogo from '../../assets/img/camera-logo.png'
 import {ScrollUpButton, ScrollDownButton} from "../../components/common/ScrollButtons";
 import { useParams } from 'react-router-dom';
@@ -12,6 +12,9 @@ import { useNavigate } from 'react-router-dom';
 import routes from "../../routes/routes";
 import GalleryImageCard from '../../components/galleries/GalleryImageCard'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import CloseIcon from '@mui/icons-material/Close';
 
 
 export default function Gallery(){
@@ -35,6 +38,8 @@ export default function Gallery(){
     };
 
     const [selectedImages, setSelectedImages] = useState({});
+    const [currentImageIndex, setCurrentImageIndex] = useState(-1);
+
     const handleToggleSelect = (id) => {
         setSelectedImages((prevSelected) => ({
         ...prevSelected,
@@ -137,6 +142,15 @@ export default function Gallery(){
         setSelectedImages({});
     };
 
+    const handleNavigate = (index) => {
+        if (index >= 0 && index < imageDetails.length) {
+            setCurrentImageIndex(index);
+        }
+    };
+
+    const handleCloseModal = () => {
+        setCurrentImageIndex(-1);
+    };
 
     return(
         <Box bgcolor="info.main">
@@ -246,11 +260,14 @@ export default function Gallery(){
                         {imageDetails.map((imageDetail, index) => (
                             <Grid item key={index}>
                                 <GalleryImageCard 
-                                    img={`${window.location.origin.replace(/0$/, '1')}/uploads/images/${imageDetail.name}`} 
+                                    // img={`${window.location.origin.replace(/0$/, '1')}/uploads/images/${imageDetail.name}`} 
+                                    img={`http://localhost:8081/uploads/images/${imageDetail.name}`} 
                                     layout={getPhotoStyle(imageDetail.name)} 
                                     isSelected={!!selectedImages[index]}
                                     onToggleSelect={() => handleToggleSelect(index)}
                                     onDelete={() => handleDeleteImage(index)}
+                                    index={index}
+                                    onOpen={handleNavigate}
                                 />
                             </Grid>
                         ))}
@@ -289,6 +306,84 @@ export default function Gallery(){
                     />
                 </IconButton>
             }
+
+            {/* Modal for displaying the image in a larger view */}
+            {currentImageIndex >= 0 && currentImageIndex < imageDetails.length && (
+                <Modal
+                    open={currentImageIndex >= 0}
+                    onClose={handleCloseModal}
+                    aria-labelledby="modal-title"
+                    aria-describedby="modal-description"
+                >
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            height: '100vh',
+                            bgcolor: 'rgba(0, 0, 0, 0.8)',
+                            cursor: 'pointer',
+                            position: 'relative'
+                        }}
+                        onClick={handleCloseModal}
+                    >
+                        <IconButton 
+                            sx={{ 
+                                position: 'absolute', 
+                                top: 16, 
+                                right: 16, 
+                                color: 'white',
+                                zIndex: 1
+                            }}
+                            onClick={handleCloseModal}
+                        >
+                            <CloseIcon />
+                        </IconButton>
+                        {currentImageIndex > 0 && (
+                            <IconButton 
+                                sx={{ 
+                                    position: 'absolute', 
+                                    left: 16, 
+                                    color: 'white',
+                                    zIndex: 1
+                                }}
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleNavigate(currentImageIndex - 1);
+                                }}
+                            >
+                                <ArrowBackIosNewIcon />
+                            </IconButton>
+                        )}
+                        {currentImageIndex < imageDetails.length - 1 && (
+                            <IconButton 
+                                sx={{ 
+                                    position: 'absolute', 
+                                    right: 16, 
+                                    color: 'white',
+                                    zIndex: 1
+                                }}
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleNavigate(currentImageIndex + 1);
+                                }}
+                            >
+                                <ArrowForwardIosIcon />
+                            </IconButton>
+                        )}
+                        <img 
+                            src={`http://localhost:8081/uploads/images/${imageDetails[currentImageIndex].name}`} 
+                            alt="gallery full view" 
+                            style={{
+                                maxHeight: '90%',
+                                maxWidth: '90%',
+                                cursor: 'default'
+                            }}
+                            onClick={(e) => e.stopPropagation()} // Prevent click on image from closing modal
+                        />
+                    </Box>
+                </Modal>
+            )}
 
             <ScrollUpButton />
             <ScrollDownButton />
