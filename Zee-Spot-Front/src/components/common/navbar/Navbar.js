@@ -5,12 +5,10 @@ import WhiteLogo from '../../../assets/img/logo_zeespot_white.png'
 import SignDialogs from "../../SignForms/SignDialogs";
 import AvatarMenu from './AvatarMenu'
 import routes from "../../../routes/routes";
+import SearchBar from "./SearchBar";
 
 export default function Navbar(){
     const [isConnected, setIsConnected] = useState(false)
-
-    // constante temporaire pour test routes    
-    const [galleryCount, setGalleryCount] = useState(1)
 
     useEffect(() => {
         const user = localStorage.getItem('user');
@@ -51,6 +49,8 @@ export default function Navbar(){
                     </Link>
                 </Box>
 
+                <SearchBar></SearchBar>
+
                 {/* Remplacer par ??? */}
                 <ButtonGroup 
                     sx={{
@@ -70,17 +70,11 @@ export default function Navbar(){
                     <Link to={routes.HOME}>
                         <Button>Accueil</Button>
                     </Link>
-                    {
-                        galleryCount ?
-                        <Link to={routes.MY_GALLERIES}>
-                            <Button>Galeries</Button>
-                        </Link>
-                        :
-                        <Link to={routes.FIRST_GALERIE}>
-                            <Button>Galeries</Button>
-                        </Link>
 
-                    }
+                    <Link to={routes.MY_GALLERIES}>
+                        <Button>Galeries</Button>
+                    </Link>
+
                     <Link>
                         <Button>Tarifs</Button>
                     </Link>
