@@ -260,8 +260,8 @@ export default function Gallery(){
                         {imageDetails.map((imageDetail, index) => (
                             <Grid item key={index}>
                                 <GalleryImageCard 
-                                    // img={`${window.location.origin.replace(/0$/, '1')}/uploads/images/${imageDetail.name}`} 
-                                    img={`http://localhost:8081/uploads/images/${imageDetail.name}`} 
+                                    img={`${window.location.origin.replace(/0$/, '1')}/uploads/images/${imageDetail.name}`} 
+                                    // img={`http://localhost:8081/uploads/images/${imageDetail.name}`} 
                                     layout={getPhotoStyle(imageDetail.name)} 
                                     isSelected={!!selectedImages[index]}
                                     onToggleSelect={() => handleToggleSelect(index)}
@@ -372,7 +372,8 @@ export default function Gallery(){
                             </IconButton>
                         )}
                         <img 
-                            src={`http://localhost:8081/uploads/images/${imageDetails[currentImageIndex].name}`} 
+                            // src={`http://localhost:8081/uploads/images/${imageDetails[currentImageIndex].name}`} 
+                            src={`${window.location.origin.replace(/0$/, '1')}/uploads/images/${imageDetails[currentImageIndex].name}`} 
                             alt="gallery full view" 
                             style={{
                                 maxHeight: '90%',
