@@ -6,11 +6,10 @@ import ViewModuleIcon from '@mui/icons-material/ViewModule'; // Portrait
 import ViewDayIcon from '@mui/icons-material/ViewDay'; // Paysage
 import AppsIcon from '@mui/icons-material/Apps';
 
-export default function GalleryLayoutSelect() {
-  const [galleryLayout, setGalleryLayout] = React.useState('');
+export default function GalleryLayoutSelect({ disposition, setDisposition }) {
 
   const handleChange = (event) => {
-    setGalleryLayout(event.target.value);
+    setDisposition(event.target.value)
   };
 
 
@@ -28,7 +27,7 @@ export default function GalleryLayoutSelect() {
             <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                value={galleryLayout}
+                value={disposition}
                 label="Disposition souhaitée"
                 onChange={handleChange}
                 name='disposition'

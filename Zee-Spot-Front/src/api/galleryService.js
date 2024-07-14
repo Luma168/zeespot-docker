@@ -34,5 +34,18 @@ const galleryService = {
         options.headers.append('Authorization', 'Bearer ' + access_token);
         return http.call(HOST + `/galeries/${uid}`, options, onResponse);
     },
+
+    patch_gallery_by_uid(titre, date, disposition, isPublic, access_token, uid, onResponse = undefined) {
+        const options = http.defaultOptions();
+        options.method = "PATCH";
+        options.headers.append('Authorization', 'Bearer ' + access_token);
+        options.body = JSON.stringify({
+            "titre": titre, 
+            "date": date, 
+            "disposition": disposition, 
+            "public": isPublic
+        });
+        return http.call(HOST + `/galeries/${uid}`, options, onResponse);
+    },
 }
 export default galleryService;

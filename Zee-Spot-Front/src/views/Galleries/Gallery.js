@@ -15,6 +15,7 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import CloseIcon from '@mui/icons-material/Close';
+import EditGalleryDialog from '../../components/galleries/EditGalleryDialog'; 
 
 
 export default function Gallery(){
@@ -51,6 +52,7 @@ export default function Gallery(){
     const { uid } = useParams();    
     const [gallery, setGallery] = useState();
     const [imageDetails, setImageDetails] = useState([])
+    const [openEditDialog, setOpenEditDialog] = useState(false)
 
     useEffect(() => {
         galleryService.get_gallery_by_uid(localStorage.getItem('access_token'), uid, (statusCode, jsonRes) => {
@@ -152,6 +154,32 @@ export default function Gallery(){
         setCurrentImageIndex(-1);
     };
 
+    const handleOpenEditDialog = () => {
+        setOpenEditDialog(true);
+    };
+
+    const handleCloseEditDialog = () => {
+        setOpenEditDialog(false);
+    };
+
+    const handleSaveEdit = (updatedGallery) => {
+        const { titre, date, disposition, public: isPublic } = updatedGallery;
+        galleryService.patch_gallery_by_uid(titre, date, disposition, isPublic, localStorage.getItem('access_token'), uid, (statusCode, jsonRes) => {
+          if (200 === statusCode) {
+            setGallery({
+              ...gallery,
+              titre,
+              date,
+              disposition,
+              public: isPublic,
+            });
+          } else {
+            console.log("Une erreur est survenue, veuillez réessayer ultérieurement.");
+          }
+          handleCloseEditDialog();
+        });
+    };
+
     return(
         <Box bgcolor="info.main">
 
@@ -192,7 +220,7 @@ export default function Gallery(){
                         <Typography variant="h3">05/05/2024</Typography> */}
                     </Box>
                     <IconButton 
-                        onClick={() => deleteGallery(uid)}
+                        onClick={handleOpenEditDialog}
                         sx={{ 
                             color: 'info.main', 
                             '&:hover': {
@@ -210,6 +238,24 @@ export default function Gallery(){
                             }} 
                         />
                     </IconButton>
+
+                    <IconButton 
+                        onClick={() => deleteGallery(uid)}
+                        sx={{ 
+                            color: 'info.main', 
+                            '&:hover': {
+                                bgcolor: 'primary.light'
+                            }
+                        }} 
+                    >
+                        <DeleteOutlineIcon 
+                            sx={{   
+                                fontSize: '60px',
+                                color: 'black'
+                            }}
+                        />
+                    </IconButton>
+
                 </Box>
             </Box>
 
@@ -388,6 +434,13 @@ export default function Gallery(){
 
             <ScrollUpButton />
             <ScrollDownButton />
+
+            <EditGalleryDialog
+                open={openEditDialog}
+                onClose={handleCloseEditDialog}
+                gallery={gallery}
+                onSave={handleSaveEdit}
+            />
         </Box>
     )
 }

@@ -29,8 +29,10 @@ const VisuallyHiddenInput = styled('input')({
   });
 
 export default function GalleryForm(){
+    
+  const [disposition, setDisposition] = useState('');
+
     const [openDownloadFile, setOpenDownloadFile] = useState(false);
-    const { setAccessToken, setRefreshToken, setUser } = useAuth();
     const navigate = useNavigate();
     const [filesToUpload, setFilesToUpload] = useState([])
     const [coverFile, setCoverFile] = useState(null);
@@ -151,7 +153,7 @@ export default function GalleryForm(){
                             }}
                         >
                             <TextField sx={{width: '400px'}} required fullWidth id="outlined-basic" label="Nom de la Galerie" variant="outlined" name="titre"/>
-                            <GalleryLayoutSelect />
+                            <GalleryLayoutSelect disposition={disposition} setDisposition={setDisposition}/>
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
                                 <DatePicker label="Date" required name="date"/>
                             </LocalizationProvider>
