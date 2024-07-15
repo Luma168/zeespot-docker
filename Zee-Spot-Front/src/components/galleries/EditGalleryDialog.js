@@ -47,18 +47,18 @@ export default function EditGalleryDialog({ open, onClose, gallery, onSave }) {
       aria-describedby="edit-gallery-dialog-description"
     >
       <Box p={5} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <Typography variant='h1'>Edit Gallery</Typography>
+        <Typography variant='h1'>Modifier la gallerie</Typography>
         <form onSubmit={handleSave}>
           <TextField
             margin="normal"
-            label="Title"
+            label="Titre"
             variant="outlined"
             name="title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             fullWidth
           />
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="fr">
             <DatePicker
               label="Date"
               value={date}
@@ -77,10 +77,10 @@ export default function EditGalleryDialog({ open, onClose, gallery, onSave }) {
                 name="isPublic"
               />
             }
-            label="Public Gallery"
+            label="Gallerie publique"
           />
           <Button type="submit" variant="contained" sx={{ mt: 2 }}>
-            Save
+            Valider
           </Button>
         </form>
       </Box>

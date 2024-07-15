@@ -101,13 +101,6 @@ export default function MyGalleries(){
                     }}/>
                 </Box>
 
-                {/* <Box gap={3} sx={{display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
-                    {galleries?.map((gallery) => (
-                        <GalleryCard key={gallery.id} gallery={gallery} />
-                    ))}
-                    <CreateGalleryCard />
-                </Box> */}
-
                 <Box gap={3} sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
                     {galleries?.map((gallery) => (
                         <GalleryCard

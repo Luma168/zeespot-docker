@@ -86,7 +86,7 @@ export default function SignIn(props){
                     }}
                 >
                     <TextField required fullWidth id="outlined-basic" label="Email" variant="outlined" name="email" />
-                    <TextField required fullWidth id="outlined-basic" label="Mot de passe" variant="outlined" name="password"/>
+                    <TextField required fullWidth id="outlined-basic" label="Mot de passe" variant="outlined" name="password" type="password"/>
                     <Link><Typography mb={5} variant="h5">Mot de passe oublié</Typography></Link>
 
                     <Box sx={{display: 'flex', mt:'15px'}}>

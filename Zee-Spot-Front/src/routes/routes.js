@@ -5,7 +5,8 @@ const routes = {
     GALLERY_FORM: '/galerie-form',
     PROFILE: '/profile',
     MY_GALLERIES: '/mes-galeries',
-    GALLERY: '/galerie/:uid'
+    GALLERY: '/galerie/:uid',
+    TARIFS: '/tarifs'
     // GALLERY: '/galerie'
 }
 export default routes;

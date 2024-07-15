@@ -190,8 +190,8 @@ export default function FullWidthTabs(props) {
                                     <TextField required sx={{width: "49%"}} id="outlined-basic" label="Prénom" variant="outlined" name='prenom' />
                                 </Box>
                                 <TextField required fullWidth id="outlined-basic" label="Email" variant="outlined" name='email'/>
-                                <TextField required fullWidth id="outlined-basic" label="Mot de passe" variant="outlined" name='password'/>
-                                <TextField required fullWidth id="outlined-basic" label="Confirmer mot de passe" variant="outlined" name='confirm-password'/>
+                                <TextField required fullWidth id="outlined-basic" label="Mot de passe" variant="outlined" name='password' type='password'/>
+                                <TextField required fullWidth id="outlined-basic" label="Confirmer mot de passe" variant="outlined" name='confirm-password' type='password'/>
                                 <input type="hidden" name="role" value="ROLE_CLIENT" />
                             </Box>
                             <Button size='large' sx={{alignSelf:'center', mt:'25px'}} variant="contained" type='submit'>VALIDER L'INSCRIPTION</Button>
@@ -251,17 +251,17 @@ export default function FullWidthTabs(props) {
                                 </Box>
                                 <TextField required fullWidth id="outlined-basic" label="Email professionnel" variant="outlined" name='email_pro'/>
                                 <TextField required fullWidth id="outlined-basic" label="Email" variant="outlined" name='email'/>
-                                <TextField required fullWidth id="outlined-basic" label="Mot de passe" variant="outlined" name='password'/>
-                                <TextField required fullWidth id="outlined-basic" label="Confirmer mot de passe" variant="outlined" name='confirm-password'/>
+                                <TextField required fullWidth id="outlined-basic" label="Mot de passe" variant="outlined" name='password' type='password'/>
+                                <TextField required fullWidth id="outlined-basic" label="Confirmer mot de passe" variant="outlined" name='confirm-password' type='password'/>
                                 <Box sx={{display: "flex", justifyContent: "space-between"}}>
                                     <TextField required sx={{width: "49%"}} id="outlined-basic" label="Numéro de téléphone" variant="outlined" name='tel_primaire'/>
                                     <TextField sx={{width: "49%"}} id="outlined-basic" label="Numéro de téléphone secondaire" variant="outlined" name='tel_secondaire' />
                                 </Box>
                                 <Box sx={{display: "flex", justifyContent: "space-between"}}>
                                     <TextField required sx={{width: "24%"}} id="outlined-basic" label="N° et rue" variant="outlined" name='rue'/>
-                                    <TextField sx={{width: "24%"}} id="outlined-basic" label="Ville" variant="outlined" name='ville' />
-                                    <TextField sx={{width: "24%"}} id="outlined-basic" label="Code postal" variant="outlined" name='code_postal' />
-                                    <TextField sx={{width: "24%"}} id="outlined-basic" label="Département" variant="outlined" name='departement' />
+                                    <TextField required sx={{width: "24%"}} id="outlined-basic" label="Ville" variant="outlined" name='ville' />
+                                    <TextField required sx={{width: "24%"}} id="outlined-basic" label="Code postal" variant="outlined" name='code_postal' />
+                                    <TextField required sx={{width: "24%"}} id="outlined-basic" label="Département" variant="outlined" name='departement' />
                                 </Box>
                                 <TextField required fullWidth id="outlined-basic" label="Numéro de Siret" variant="outlined" name='siret'/>
                                 <TextField required fullWidth id="outlined-basic" label="Siège social" variant="outlined" name='siege_social'/>

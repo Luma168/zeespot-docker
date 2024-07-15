@@ -19,7 +19,7 @@ export default function DownloadFile(props){
                     allowedExtensions={['png','apng', 'jpeg', 'jpg', 'pjpeg']}
                     acceptedType={'image/*'}
                 />
-            <Button onClick={props.handleClose}>Fermer</Button>
+            <Button onClick={props.handleClose}>Valider</Button>
         </Box>
     )
 }

@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { AppBar, Box, Button, ButtonGroup, Toolbar} from "@mui/material";
-import WhiteLogo from '../../../assets/img/logo_zeespot_white.png'
+import { NavLink } from "react-router-dom";
+import { AppBar, Box, Button, ButtonGroup, Toolbar } from "@mui/material";
+import WhiteLogo from '../../../assets/img/logo_zeespot_white.png';
 import SignDialogs from "../../SignForms/SignDialogs";
-import AvatarMenu from './AvatarMenu'
+import AvatarMenu from './AvatarMenu';
 import routes from "../../../routes/routes";
 import SearchBar from "./SearchBar";
 
-export default function Navbar(){
-    const [isConnected, setIsConnected] = useState(false)
+export default function Navbar() {
+    const [isConnected, setIsConnected] = useState(false);
 
     useEffect(() => {
         const user = localStorage.getItem('user');
@@ -25,72 +25,95 @@ export default function Navbar(){
         setIsConnected(false);
     };
 
-    return(
-        <AppBar 
-            fullWidth 
-            position="static" 
+    return (
+        <AppBar
+            fullWidth
+            position="static"
             sx={{
-                position:'sticky',
-                top:'0',
+                position: 'sticky',
+                top: '0',
                 zIndex: 1000
             }}
-            
         >
-            <Toolbar 
+            <Toolbar
                 sx={{
-                    display:'flex', 
-                    height:'100px',
-                    bgcolor:'secondary.main',
+                    display: 'flex',
+                    height: '100px',
+                    bgcolor: 'secondary.main',
                 }}
             >
-                <Box sx={{mr:'auto'}}>
-                    <Link to={routes.ALL}>
-                        <img src={WhiteLogo} width="170px"/>
-                    </Link>
+                <Box sx={{ mr: 'auto' }}>
+                    <NavLink to={routes.ALL}>
+                        <img src={WhiteLogo} width="170px" alt="Logo" />
+                    </NavLink>
                 </Box>
 
-                <SearchBar></SearchBar>
+                <SearchBar />
 
-                {/* Remplacer par ??? */}
-                <ButtonGroup 
+                <ButtonGroup
                     sx={{
                         mr: 10,
-                        '& .MuiButtonBase-root':{
-                            bgcolor:'primary.main', 
-                            color:'secondary.main', 
-                            fontWeight:'bold',
+                        '& .MuiButtonBase-root': {
+                            bgcolor: 'primary.main',
+                            color: 'secondary.main',
+                            fontWeight: 'bold',
                             px: 4,
                             py: 1,
-                            '&:hover': {backgroundColor: 'primary.dark'},
+                            '&:hover': { backgroundColor: 'primary.dark' },
                         }
-                    }} 
-                    variant="contained" 
+                    }}
+                    variant="contained"
                     aria-label="Basic button group"
                 >
-                    <Link to={routes.HOME}>
-                        <Button>Accueil</Button>
-                    </Link>
+                    <Button component={NavLink}
+                        to={routes.HOME}
+                        isActive={(match, location) => location.pathname === routes.HOME}
+                        sx={{
+                            '&.active': {
+                                bgcolor: 'primary.light',
+                                color: 'white'
+                            }
+                        }}
+                    >
+                        Accueil
+                    </Button>
 
-                    <Link to={routes.MY_GALLERIES}>
-                        <Button>Galeries</Button>
-                    </Link>
+                    <Button component={NavLink}
+                        to={routes.MY_GALLERIES}
+                        isActive={(match, location) => location.pathname === routes.MY_GALLERIES}
+                        sx={{
+                            '&.active': {
+                                bgcolor: 'primary.light',
+                                color: 'white'
+                            }
+                        }}
+                    >
+                        Galeries
+                    </Button>
 
-                    <Link>
-                        <Button>Tarifs</Button>
-                    </Link>
+                    <Button component={NavLink}
+                        to={routes.TARIFS}
+                        isActive={(match, location) => location.pathname === routes.TARIFS}
+                        sx={{
+                            '&.active': {
+                                bgcolor: 'primary.light',
+                                color: 'white'
+                            }
+                        }}
+                    >
+                        Tarifs
+                    </Button>
                 </ButtonGroup>
 
-                {/* utiliser Mui Account Menu */}
-                <Box sx={{mr:'40px'}}>
-                    {
-                    isConnected ? 
-                    <AvatarMenu onLogout={handleLogout} />
-                    :
-                    <SignDialogs onLogin={handleLogin} />
+                <Box sx={{ mr: '40px' }}>
+                    {isConnected ?
+                        <AvatarMenu onLogout={handleLogout} />
+                        :
+                        <SignDialogs onLogin={handleLogin} />
                     }
                 </Box>
 
             </Toolbar>
         </AppBar>
-    )
+    );
 }

@@ -366,7 +366,7 @@ export default function GalleryForm() {
                         >
                             <TextField sx={{ width: '400px' }} required fullWidth id="outlined-basic" label="Nom de la Galerie" variant="outlined" name="titre" />
                             <GalleryLayoutSelect disposition={disposition} setDisposition={setDisposition} />
-                            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                            <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="fr">
                                 <DatePicker label="Date" required name="date" />
                             </LocalizationProvider>
                         </Box>

@@ -23,12 +23,12 @@ export default function GalleryLayoutSelect({ disposition, setDisposition }) {
                 // }
             }}
         >
-            <InputLabel id="demo-simple-select-label">Disposition souhaitée</InputLabel>
+            <InputLabel id="demo-simple-select-label">Disposition</InputLabel>
             <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
                 value={disposition}
-                label="Disposition souhaitée"
+                label="Disposition"
                 onChange={handleChange}
                 name='disposition'
             >          

@@ -18,7 +18,7 @@ export default function SearchBar() {
       }, []);
 
     return (
-        <Stack spacing={2} sx={{ width: 300 }}>
+        <Stack spacing={2} sx={{ minWidth: 300 }}>
             <Autocomplete
                 freeSolo
                 options={photographers}

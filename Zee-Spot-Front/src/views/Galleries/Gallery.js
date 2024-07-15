@@ -216,8 +216,6 @@ export default function Gallery(){
                     <Box>
                         <Typography variant="h3b">{gallery ? gallery.titre : ""}</Typography>
                         <Typography variant="h3">{gallery ? dayjs(gallery.date).format('D MMMM, YYYY') : ""}</Typography>
-                        {/* <Typography variant="h3b">Mariage : Mon mariage</Typography>
-                        <Typography variant="h3">05/05/2024</Typography> */}
                     </Box>
                     <IconButton 
                         onClick={handleOpenEditDialog}
@@ -258,28 +256,6 @@ export default function Gallery(){
 
                 </Box>
             </Box>
-
-            {/* Pictures display */}
-            {/* <Box sx={{display: 'flex'}}>
-                <Box 
-                    sx={{
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        width: '90%'
-                    }}
-                >
-                    <Grid container spacing={3} my={10} ml={5}>
-                        {photos.map((photo) => (
-                            <Grid item>
-                                <GalleryImageCard img={photo} layout={getPhotoStyle(photo)} areSelected={areSelected}/>
-                            </Grid>
-                        ))}
-                    </Grid>
-                </Box>
-                <Box 
-                    sx={{width: '10%'}}/>
-            </Box> */}
             
             <Box sx={{display: 'flex'}}>
                 <Box 
@@ -290,18 +266,6 @@ export default function Gallery(){
                         width: '90%'
                     }}
                 >
-                    {/* <Grid container spacing={3} my={10} ml={5}>
-                        {imageNames.map((imageName, index) => (
-                            <Grid item key={index}>
-                                <GalleryImageCard 
-                                    img={`${window.location.origin.replace(/0$/, '1')}/uploads/images/${imageName}`} 
-                                    layout={getPhotoStyle(imageName)} 
-                                    isSelected={!!selectedImages[index]}
-                                    onToggleSelect={() => handleToggleSelect(index)}
-                                />
-                            </Grid>
-                        ))}
-                    </Grid> */}
                     <Grid container spacing={3} my={10} ml={5}>
                         {imageDetails.map((imageDetail, index) => (
                             <Grid item key={index}>
@@ -322,21 +286,6 @@ export default function Gallery(){
                 </Box>
                 <Box sx={{width: '10%'}}/>
             </Box>
-
-            {/* modify gallery bottom */}
-            <Box
-                sx={{
-                    width: '100%',
-                    display: 'flex',
-                    justifyContent: 'flex-end'
-                }}
-            >
-                <Button 
-                    variant="contained"
-                    sx={{margin: '0 50px 30px 0'}}
-                >Valider et enregistrer ma galerie</Button>
-            </Box>
-
 
             {
                 Object.values(selectedImages).some(isSelected => isSelected) &&
