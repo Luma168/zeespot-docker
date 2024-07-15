@@ -418,8 +418,8 @@ export default function Gallery(){
                             </IconButton>
                         )}
                         <img 
-                            // src={`http://localhost:8081/uploads/images/${imageDetails[currentImageIndex].name}`} 
                             src={`${window.location.origin.replace(/0$/, '1')}/uploads/images/${imageDetails[currentImageIndex].name}`} 
+                            // src={`http://localhost:8081/uploads/images/${imageDetails[currentImageIndex].name}`} 
                             alt="gallery full view" 
                             style={{
                                 maxHeight: '90%',

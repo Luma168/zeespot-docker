@@ -51,6 +51,7 @@ export default function GalleryCard(props) {
                 <CardMedia
                     component="img"
                     image={`${window.location.origin.replace(/0$/, '1')}/uploads/images/${imageName}`}
+                    // image={`http://localhost:8081/uploads/images/${imageName}`}
                     alt="gallery card"
                     sx={{
                         backgroundRepeat: 'no-repeat',
