@@ -46,9 +46,9 @@ export default function EditGalleryDialog({ open, onClose, gallery, onSave }) {
       keepMounted
       aria-describedby="edit-gallery-dialog-description"
     >
-      <Box p={5} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      <Box p={5} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', minHeight: '500px',}}>
         <Typography variant='h1'>Modifier la gallerie</Typography>
-        <form onSubmit={handleSave}>
+        <form onSubmit={handleSave} style={{minHeight: '500px',display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-around'}}>
           <TextField
             margin="normal"
             label="Titre"

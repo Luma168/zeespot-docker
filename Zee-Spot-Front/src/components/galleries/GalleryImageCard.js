@@ -1,12 +1,26 @@
 import * as React from 'react';
-import { CardMedia, Card, Checkbox, Box, IconButton } from '@mui/material';
+import { CardMedia, Card, Checkbox, Box, IconButton, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button } from '@mui/material';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 
     export default function GalleryImageCard(props) {
         const [isSelected, setIsSelected] = React.useState(false)
-
+        const [openDialog, setOpenDialog] = React.useState(false); // Dialog state
+        
         const handleToggle = () => {
             setIsSelected((prevState) => !prevState);
+        };
+
+        const handleOpenDialog = () => {
+            setOpenDialog(true);
+        };
+    
+        const handleCloseDialog = () => {
+            setOpenDialog(false);
+        };
+    
+        const handleDelete = () => {
+            props.onDelete();
+            handleCloseDialog();
         };
 
     return (
@@ -41,7 +55,7 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
                         sx={{color: 'info.main'}} />
                     <IconButton 
                         sx={{ color: 'info.main'}}
-                        onClick={props.onDelete}
+                        onClick={handleOpenDialog}
                         >
                         <DeleteOutlineIcon />
                     </IconButton>
@@ -60,6 +74,27 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
                     />
             </Box>
         </Card>
+        <Dialog
+                open={openDialog}
+                onClose={handleCloseDialog}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogTitle id="alert-dialog-title">{"Confirmation de la suppression"}</DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                        Êtes-vous sûr de vouloir supprimer cette image?
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleCloseDialog} color="primary">
+                        Annuler
+                    </Button>
+                    <Button onClick={handleDelete} color="primary" autoFocus>
+                        Confirmer
+                    </Button>
+                </DialogActions>
+            </Dialog>
     </>
   );
 }

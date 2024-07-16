@@ -81,8 +81,6 @@ export default function FirstGallery(){
                         </Link>
                     </Box>
                 </Box>
-                <Box></Box>
-                
             </Container>
         </Box>
     )

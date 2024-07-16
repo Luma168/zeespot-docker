@@ -6,9 +6,17 @@ import SignDialogs from "../../SignForms/SignDialogs";
 import AvatarMenu from './AvatarMenu';
 import routes from "../../../routes/routes";
 import SearchBar from "./SearchBar";
+import Notification from "../Notification";
 
 export default function Navbar() {
     const [isConnected, setIsConnected] = useState(false);
+    const [openSnackbar, setOpenSnackbar] = useState(false);
+    const [snackbarMessage, setSnackbarMessage] = useState('');
+    const [snackbarSeverity, setSnackbarSeverity] = useState('success');
+
+    const handleCloseSnackbar = () => {
+        setOpenSnackbar(false);
+    };
 
     useEffect(() => {
         const user = localStorage.getItem('user');
@@ -18,6 +26,9 @@ export default function Navbar() {
     }, []);
 
     const handleLogin = () => {
+        setSnackbarMessage('Connecté!');
+        setSnackbarSeverity('success');
+        setOpenSnackbar(true);
         setIsConnected(true);
     };
 
@@ -48,7 +59,6 @@ export default function Navbar() {
                     </NavLink>
                 </Box>
 
-                <SearchBar />
 
                 <ButtonGroup
                     sx={{
@@ -105,7 +115,9 @@ export default function Navbar() {
                     </Button>
                 </ButtonGroup>
 
-                <Box sx={{ mr: '40px' }}>
+                <SearchBar />
+
+                <Box sx={{ mr: '40px', ml: '100px' }}>
                     {isConnected ?
                         <AvatarMenu onLogout={handleLogout} />
                         :
@@ -114,6 +126,12 @@ export default function Navbar() {
                 </Box>
 
             </Toolbar>
+            <Notification
+                open={openSnackbar}
+                message={snackbarMessage}
+                severity={snackbarSeverity}
+                onClose={handleCloseSnackbar}
+            />
         </AppBar>
     );
 }

@@ -247,6 +247,7 @@ export default function GalleryForm() {
     const navigate = useNavigate();
     const [filesToUpload, setFilesToUpload] = useState([])
     const [coverFile, setCoverFile] = useState(null);
+    const [selectedDate, setSelectedDate] = useState(null);
 
     const handleFilesChange = (files) => {
         setFilesToUpload([ ...files ])
@@ -292,12 +293,13 @@ export default function GalleryForm() {
     const submit = async (e) => {
         e.preventDefault();
         const data = new FormData(e.currentTarget);
+        const formattedDate = selectedDate ? selectedDate.format('YYYY-MM-DD') : null;
         galleryService.create_gallery(
             localStorage.getItem('user'), 
             data.get('titre'), 
-            data.get('date'), 
+            formattedDate, 
             disposition, 
-            data.get('public') === 'on',
+            data.get('public'),
             localStorage.getItem('access_token'),
             async (statusCode, jsonRes) => {
                 if (201 === statusCode) {

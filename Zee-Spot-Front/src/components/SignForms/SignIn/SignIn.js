@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import {TextField, Box, Checkbox, Button, Slide, Typography} from '@mui/material';
 import LeftCurly from "../../../assets/img/LeftCurly.png";
 import RightCurly from "../../../assets/img/RightCurly.png";
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../provider/AuthProvider';
 import authService from '../../../api/authService';
+import Notification from '../../common/Notification';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -13,7 +14,9 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 export default function SignIn(props){
     const { setAccessToken, setRefreshToken, setUser } = useAuth();
-    const navigate = useNavigate();
+    const [openSnackbar, setOpenSnackbar] = useState(false);
+    const [snackbarMessage, setSnackbarMessage] = useState('');
+    const [snackbarSeverity, setSnackbarSeverity] = useState('success');
 
     const fetchProfile = (access_token) => {
         authService.profile(access_token, (statusCode, jsonRes) => {
@@ -23,13 +26,17 @@ export default function SignIn(props){
                 props.handleClose()
                 props.onLogin()
             } else if (401 === statusCode) {
-                console.log('Identifiant ou mot de passe invalide');
+                setSnackbarMessage('Mauvais identifiants');
+                setSnackbarSeverity('error');
+                setOpenSnackbar(true);
             } else {
-                console.log("Une erreur est survenue, veuillez réessayer ultérieurement.");
+                setSnackbarMessage('An error occurred. Please try again later.');
+                setSnackbarSeverity('error');
+                setOpenSnackbar(true)
             };
         });
     }
-
+    
     const handleSubmit = (event) => {
         event.preventDefault();
         
@@ -39,13 +46,20 @@ export default function SignIn(props){
             if (200 === statusCode) {
                 fetchProfile(jsonRes.token);
             } else if (401 === statusCode) {
-                console.log('Identifiant ou mot de passe invalide');
+                setSnackbarMessage('Mauvais identifiants');
+                setSnackbarSeverity('error');
+                setOpenSnackbar(true);
             } else {
-                console.log("Une erreur est survenue, veuillez réessayer ultérieurement.");
+                setSnackbarMessage('An error occurred. Please try again later.');
+                setSnackbarSeverity('error');
+                setOpenSnackbar(true);
             };
         });
     };
 
+    const handleCloseSnackbar = () => {
+        setOpenSnackbar(false);
+    };
 
     return(
         <Box 
@@ -110,6 +124,13 @@ export default function SignIn(props){
                     <br></br>
                     Inscrivez vous
                 </Button>
+
+                <Notification
+                    open={openSnackbar}
+                    message={snackbarMessage}
+                    severity={snackbarSeverity}
+                    onClose={handleCloseSnackbar}
+                />
             </Box>
         </Box>
     )

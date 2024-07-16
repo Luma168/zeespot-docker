@@ -9,6 +9,7 @@ import Layout from '../components/Layout.js';
 import GalleryForm from "../views/Galleries/GalleryForm.js";
 import MyGalleries from "../views/Galleries/MyGalleries.js";
 import Gallery from "../views/Galleries/Gallery.js";
+import Pricing from "../views/Pricing.js";
 
 const Routes = () => {
     const { accessToken, user } = useAuth();
@@ -39,6 +40,10 @@ const Routes = () => {
                 {
                     path: routes.GALLERY,
                     element: <Gallery />
+                },
+                {
+                    path: routes.TARIFS,
+                    element: <Pricing />
                 },
             ],
         },
