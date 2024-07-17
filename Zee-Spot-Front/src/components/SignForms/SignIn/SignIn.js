@@ -120,7 +120,7 @@ export default function SignIn(props){
                         marginBottom: '50px'
                     }}
                 >
-                    Vous avez déjà un compte?
+                    Vous n'avez pas de compte ?
                     <br></br>
                     Inscrivez vous
                 </Button>

@@ -10,6 +10,9 @@ import GalleryForm from "../views/Galleries/GalleryForm.js";
 import MyGalleries from "../views/Galleries/MyGalleries.js";
 import Gallery from "../views/Galleries/Gallery.js";
 import Pricing from "../views/Pricing.js";
+import Account from "../views/Account.js";
+import Profil from "../views/Profil.js";
+import CGU from "../views/CGU.js";
 
 const Routes = () => {
     const { accessToken, user } = useAuth();
@@ -24,6 +27,36 @@ const Routes = () => {
                 {
                     path: routes.HOME,
                     element: <Home />,
+                },
+                {
+                    path: routes.PRICING,
+                    element: <Pricing />
+                },
+                {
+                    path: routes.CGU,
+                    element: <CGU />
+                },
+            ],
+        },
+    ];
+
+    // Define routes accessible only to authenticated users
+    const routesForAuthenticatedOnly = [
+        {
+            path: routes.ALL,
+            element: <ProtectedRoute />, // Wrap the component in ProtectedRoute
+            children: [
+                {
+                    path: routes.HOME,
+                    element: <Home />,
+                },
+                {
+                    path: routes.ACCOUNT,
+                    element: <Account />,
+                },
+                {
+                    path: routes.PROFIL,
+                    element: <Profil />,
                 },
                 {
                     path: routes.FIRST_GALERIE,
@@ -41,28 +74,6 @@ const Routes = () => {
                     path: routes.GALLERY,
                     element: <Gallery />
                 },
-                {
-                    path: routes.TARIFS,
-                    element: <Pricing />
-                },
-            ],
-        },
-    ];
-
-    // Define routes accessible only to authenticated users
-    const routesForAuthenticatedOnly = [
-        {
-            path: routes.ALL,
-            element: <ProtectedRoute />, // Wrap the component in ProtectedRoute
-            children: [
-                {
-                    path: routes.HOME,
-                    element: <Home />,
-                },
-                {
-                    path: routes.GALLERY_FORM,
-                    element: <GalleryForm />
-                }
             ],
         },
     ];

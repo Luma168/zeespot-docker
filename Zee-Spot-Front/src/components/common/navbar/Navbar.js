@@ -102,8 +102,8 @@ export default function Navbar() {
                     </Button>
 
                     <Button component={NavLink}
-                        to={routes.TARIFS}
-                        isActive={(match, location) => location.pathname === routes.TARIFS}
+                        to={routes.PRICING}
+                        isActive={(match, location) => location.pathname === routes.PRICING}
                         sx={{
                             '&.active': {
                                 bgcolor: 'primary.light',

@@ -1,9 +1,8 @@
 import * as React from 'react';
-import {Box, Avatar, Menu, MenuItem, ListItemIcon, Divider, IconButton, Typography, Tooltip} from '@mui/material';
+import { Box, Avatar, Menu, MenuItem, ListItemIcon, Divider, IconButton, Tooltip } from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import PersonAdd from '@mui/icons-material/PersonAdd';
-import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
+import { Link } from 'react-router-dom';
 
 export default function AccountMenu({ onLogout }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -93,31 +92,20 @@ export default function AccountMenu({ onLogout }) {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <MenuItem onClick={handleClose}>
-          <Avatar /> Profile
+        <MenuItem component={Link} to="/profile" onClick={handleClose}>
+          <Avatar /> Mon Profil
         </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <Avatar /> My account
+        <MenuItem component={Link} to="/compte" onClick={handleClose}>
+          <Avatar /> Mon Compte
         </MenuItem>
 
         <Divider />
-        <MenuItem onClick={handleClose}>
-          <ListItemIcon>
-            <PersonAdd fontSize="small" />
-          </ListItemIcon>
-          Add another account
-        </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <ListItemIcon>
-            <Settings fontSize="small" />
-          </ListItemIcon>
-          Settings
-        </MenuItem>
+      
         <MenuItem onClick={handleLogout}>
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>
-          Logout
+          Se déconnecter
         </MenuItem>
       </Menu>
     </React.Fragment>

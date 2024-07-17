@@ -1,17 +1,24 @@
-import { Box, Container, Typography } from "@mui/material"
-import React, { useState } from "react"
-// import connectedPricing from '../assets/img/connectedPricing.png'
-// import disconnectedPricing from '../assets/img/disconnectedPricing.png'
+import { Box, Typography } from "@mui/material"
+import React, { useState, useEffect } from "react"
+import connectedPricing from '../assets/img/connectedPricing.png'
+import disconnectedPricing from '../assets/img/disconnectedPricing.png'
 
 export default function Pricing(){
-    const [isConnected, setIsConnected] = useState(true)
+    const [isConnected, setIsConnected] = useState(false);
+
+    useEffect(() => {
+        const user = localStorage.getItem('user');
+        if (user) {
+            setIsConnected(true);
+        }
+    }, []);
+
     return(
         <Box 
             sx={{
                 bgcolor: 'info.main',
                 display: 'flex',
                 flexDirection: 'column',
-                // alignItems: 'center',
                 justifyContent: 'space-between',
                 height: `calc(100vh - 204px)`
 
@@ -31,7 +38,7 @@ export default function Pricing(){
                     </Box>
                 </Box>  
 
-                {/* <img width={'100%'} src={isConnected ? connectedPricing : disconnectedPricing} /> */}
+                <img width={'100%'} src={isConnected ? connectedPricing : disconnectedPricing} />
 
                 <Box>
                 </Box>

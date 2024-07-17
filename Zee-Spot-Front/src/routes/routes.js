@@ -3,10 +3,12 @@ const routes = {
     HOME: '/accueil',
     FIRST_GALERIE: '/premiere-galerie',
     GALLERY_FORM: '/galerie-form',
-    PROFILE: '/profile',
+    PROFIL: '/profile',
     MY_GALLERIES: '/mes-galeries',
     GALLERY: '/galerie/:uid',
-    TARIFS: '/tarifs'
+    PRICING: '/tarifs',
+    ACCOUNT: '/compte',
+    CGU: '/conditions-utilisations',
     // GALLERY: '/galerie'
 }
 export default routes;

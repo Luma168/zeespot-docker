@@ -116,7 +116,7 @@ export default function MyGalleries(){
                     flexDirection: 'column',
                     alignItems: 'center',
                     justifyContent: 'space-between',
-                    height: `calc(100vh - 204px)`,
+                    // height: `calc(100vh - 204px)`,
                 }}
             >
                 <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
@@ -144,8 +144,8 @@ export default function MyGalleries(){
                 <Box gap={3} sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
                     {loading ? (
                         renderLoaders(galleries? galleries.length : 2) // Display 8 loaders as placeholders
-                    ) : galleries.length === 0 ? (
-                        <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+                    ) : galleries?.length === 0 ? (
+                        <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '30px'}}>
                             <Typography 
                                 variant='h2b'
                                 mb={4}
@@ -159,7 +159,8 @@ export default function MyGalleries(){
                                 mt={4}
                                 sx={{
                                     display: 'flex',
-                                    alignItems: 'center'
+                                    alignItems: 'center',
+                                    marginBottom: '30px'
                                 }}
                             >
                                 <Typography 
@@ -173,7 +174,7 @@ export default function MyGalleries(){
                         </Box>
                     ) : (
                         <>
-                            {galleries.map((gallery) => (
+                            {galleries?.map((gallery) => (
                                 <GalleryCard
                                     key={gallery.id}
                                     gallery={gallery}
@@ -211,7 +212,7 @@ export default function MyGalleries(){
                     <DialogTitle id="alert-dialog-title">{"Confirmation de la suppression"}</DialogTitle>
                     <DialogContent>
                         <DialogContentText id="alert-dialog-description">
-                            Êtes-vous sûr de vouloir supprimer ces galleries?
+                            Êtes-vous sûr de vouloir supprimer ces galeries ?
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>

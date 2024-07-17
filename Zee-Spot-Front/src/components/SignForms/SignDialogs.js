@@ -1,6 +1,6 @@
 import * as React from 'react';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { Avatar, Box, Button, Dialog, Slide, Typography} from "@mui/material";
+import { Avatar, Button, Dialog, Slide } from "@mui/material";
 import SignUpTabs from './SignUp/SignUpTabs';
 import SignIn from './SignIn/SignIn';
 
@@ -62,10 +62,6 @@ export default function AlertDialogSlide({ onLogin }) {
           alignItems: 'center'
         }}
       >
-        <Box mt={3} sx={{display: 'flex', flexDirection: 'row', alignItems: 'baseline'}}>
-          <Typography variant='letter'>I</Typography>
-          <Typography variant='h1'>NSCRIPTION</Typography>
-        </Box>
         <SignUpTabs 
           handleClose={handleClose} 
           handleClickOpenSignIn={handleClickOpenSignIn}

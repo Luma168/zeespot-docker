@@ -33,14 +33,14 @@ const theme = createTheme({
         'Cardo',
         'serif'
       ].join(','),
-      fontSize: '60px'
+      fontSize: '50px'
     },
     h1b: {
       fontFamily: [
         'Cardo',
         'serif'
       ].join(','),
-      fontSize: '60px',
+      fontSize: '50px',
       fontWeight: 'bold'
     },
 
@@ -122,7 +122,7 @@ const theme = createTheme({
         'Castellar',
         'serif'
       ].join(','),
-      fontSize: '100px',
+      fontSize: '70px',
       fontWeight: 'regular'
     },
 

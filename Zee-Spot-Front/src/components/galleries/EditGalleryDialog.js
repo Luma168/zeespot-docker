@@ -47,7 +47,7 @@ export default function EditGalleryDialog({ open, onClose, gallery, onSave }) {
       aria-describedby="edit-gallery-dialog-description"
     >
       <Box p={5} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', minHeight: '500px',}}>
-        <Typography variant='h1'>Modifier la gallerie</Typography>
+        <Typography variant='h1'>Modifier la galerie</Typography>
         <form onSubmit={handleSave} style={{minHeight: '500px',display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-around'}}>
           <TextField
             margin="normal"
@@ -77,7 +77,7 @@ export default function EditGalleryDialog({ open, onClose, gallery, onSave }) {
                 name="isPublic"
               />
             }
-            label="Gallerie publique"
+            label="Galerie publique"
           />
           <Button type="submit" variant="contained" sx={{ mt: 2 }}>
             Valider

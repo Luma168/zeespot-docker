@@ -95,6 +95,10 @@ export default function FullWidthTabs(props) {
   return (
     <Box sx={{display: 'flex', justifyContent: 'center'}} >
         <Box p={5} sx={{ bgcolor: 'background.paper', borderRadius:'15px'}}>
+            <Box mb={5} sx={{display: 'flex', flexDirection: 'row', alignItems: 'baseline', justifyContent: 'center'}}>
+                <Typography variant='letter'>I</Typography>
+                <Typography variant='h1'>NSCRIPTION</Typography>
+            </Box>
 
             <Box sx={{display:'flex', justifyContent:'center'}}>
                 <AppBar 
@@ -282,7 +286,7 @@ export default function FullWidthTabs(props) {
                                 marginBottom: '50px',
                             }}
                         >
-                            Vous avez déjà un compte?
+                            Vous avez déjà un compte ?
                             <br></br>
                             Connectez vous
                         </Button>
